@@ -1,9 +1,10 @@
 <h1>Index Page</h1>
 
 <% @ideas.each do |idea|%>
-
-<%= idea.title%>
-<hr>
+<div>
+<h4><%= link_to idea.title,  idea_path(idea.id)%></h4>
+<br>
 <%= idea.description%>
-
+<div>
+<hr>
 <%end%>
