@@ -5,3 +5,19 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Idea.destroy_all
+
+200.times do
+   
+  
+    Idea.create(
+      # Faker is a ruby module. We access classes or other modules
+      # inside of module with ::. Here Hacker is a class inside of the
+      # Faker module.
+      title: Faker::Hacker.say_something_smart,
+      description: Faker::ChuckNorris.fact,
+    
+    
+    )
+  end
