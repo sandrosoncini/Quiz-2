@@ -1,6 +1,7 @@
 class User < ApplicationRecord
     has_secure_password
     has_many :ideas, dependent: :destroy
+    has_many :reviews, dependent: :destroy
 
     # Validations:
     VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
