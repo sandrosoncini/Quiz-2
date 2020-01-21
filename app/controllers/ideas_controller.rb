@@ -1,5 +1,7 @@
 class IdeasController < ApplicationController
+    before_action :authenticate_user!, except: [:show, :index]
     before_action :find_idea, only: [:show, :edit, :update, :destroy]
+    before_action :authorize!, only: [:edit, :update, :destroy]
     
     def index
         @ideas = Idea.order(created_at: :DESC)
@@ -11,6 +13,7 @@ class IdeasController < ApplicationController
 
     def create
         @idea = Idea.new(idea_params)
+        @idea.user = current_user
         if @idea.save
             redirect_to ideas_path
         else
@@ -38,14 +41,18 @@ class IdeasController < ApplicationController
         redirect_to ideas_path
     end 
 
-private
+    private
 
-def idea_params
-    params.require(:idea).permit(:title, :description)
-end
+    def idea_params
+        params.require(:idea).permit(:title, :description)
+    end
 
-def find_idea
-    @idea = Idea.find params[:id]
-end
-
+    def find_idea
+        @idea = Idea.find params[:id]
+    end
+    def authorize!
+        unless can?(:crud, @idea)
+            redirect_to root_path, alert: "access denied"
+        end
+    end
 end
